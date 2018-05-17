@@ -39,7 +39,7 @@ namespace Demo_Visualisation
             bool result = true;
 
             S7Client host = new S7Client();
-            int res = host.ConnectTo(sHostIP, 0, 2);
+            int res = host.ConnectTo(sHostIP, 0, 2);                //PLC connection string - IP address, rack, slot
             if (res != 0)
             {
                 DebugHandler("Connection", "Res:" + res.ToString());
@@ -97,11 +97,11 @@ namespace Demo_Visualisation
                 }
                 if (lines[i] == sTagDescriptor)
                 {
-                    marker = true;
+                    marker = true;                      //Tag list descriptor found - begin processing
                 }
             }
         }
-
+        //There is additional list of tags on the second tab page to list the tags
         private void populateTagList()
         {
             lvTags.Items.Clear();
@@ -120,7 +120,7 @@ namespace Demo_Visualisation
                 lvTags.Items.Add(lvi);
             }
         }
-
+        //change representation code to description
         private string repFormat(int rep)
         {
             string representation = "";
@@ -161,7 +161,7 @@ namespace Demo_Visualisation
 
             return representation;
         }
-
+        //change data type code to description
         private string dataType(int type)
         {
             string sType = "";
@@ -231,6 +231,7 @@ namespace Demo_Visualisation
 
         }
 
+        //this is where tag name in tags.ini and control name is cross checked and referenced to update values
         private void populateControls()
         {
 
@@ -303,6 +304,7 @@ namespace Demo_Visualisation
             }
         }
 
+        //single scan button
         private void button1_Click(object sender, EventArgs e)
         {
             configReader(sTagFile);
@@ -315,6 +317,7 @@ namespace Demo_Visualisation
             }
         }
 
+        //online mode enable/disable
         private void button2_Click(object sender, EventArgs e)
         {
             if (button2.Text == "OFFLINE")
@@ -342,9 +345,7 @@ namespace Demo_Visualisation
                 readTags();
                 bwOnlineMode.ReportProgress(0);
             }
-        }
-
-        
+        }      
 
         private void bwOnlineMode_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -387,12 +388,7 @@ namespace Demo_Visualisation
             }
         }
 
-        #endregion
-
-
-        
-
-        
+        #endregion             
     }
 
     #region [PLC TAG CLASS]
@@ -416,7 +412,8 @@ namespace Demo_Visualisation
             bool blReturn = false;
             byte byReturn = 0;
             char cReturn = '\n';
-
+            
+            //some processing of Snap7 return values from the PLC
             switch (iRepresentation)
             {
                 case 0:
